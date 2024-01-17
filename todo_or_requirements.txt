@@ -1,0 +1,25 @@
+nextjs
+amazon s3
+nextauth
+supabase
+editorjs
+
+
+requirements
+
+notion ui 
+auth
+archieve functionality 
+trash bin
+search
+settings
+banner
+file update
+editorjs
+project limit
+publish
+deploy
+
+
+
+db password- ayIpggImyRyW1Ve9

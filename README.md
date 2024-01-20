@@ -1,8 +1,8 @@
-# Littlemove
+# Kotion
 
-### Littlemove project.
+### Kotion project.
 
-Littlemove Dashboard frotnend build in MERN stack and typescript.
+Kotion a notion clone made in Nextjs and typescript.
 
 ## Run Locally
 

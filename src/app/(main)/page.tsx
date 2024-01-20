@@ -8,23 +8,34 @@ export default async function Home() {
   const session = await getServerSession();
 
   return (
-    <div className="min-h-[1200px] max-w-[1024px] m-auto">
+    <div className="max-w-[1024px] m-auto">
       <div className="flex items-center flex-col gap-4 m-6">
-        <h1 className="text-6xl font-bold">New year, new plans.</h1>
+        <h1 className="text-6xl font-bold text-center">
+          Write, plan, share. <br></br> With AI at your side.
+        </h1>
         <p className="text-2xl font-semibold">
-          Your workspace to write, organize, and collaborate. With AI by your
-          side.
+          Notion is the connected workspace where better, faster work happens.
         </p>
         {session?.user ? (
-          <Link href="/create">
+          <Link href="/onboarding">
             <Button variant="default" className="font-semibold text-base">
               Create Kotion <ArrowRight className="w-5" />
             </Button>
           </Link>
         ) : (
-          <Button variant="default" className="font-semibold text-base">
-            Get Kotion free <ArrowRight className="w-5" />
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="default" className="font-semibold text-base">
+              Get Kotion free <ArrowRight className="w-5" />
+            </Button>
+            <Link href={"/demo"}>
+              <Button
+                variant="link"
+                className="font-semibold text-blue-500 text-base"
+              >
+                Request a demo <ArrowRight className="w-5" />
+              </Button>
+            </Link>
+          </div>
         )}
 
         <Image

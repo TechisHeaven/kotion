@@ -6,6 +6,17 @@ import { Button } from "../ui/button";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useToast } from "../ui/use-toast";
+import { title } from "process";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarTrigger,
+} from "../ui/menubar";
+import { LogOutIcon, User } from "lucide-react";
 
 export default function Header() {
   const [scroll, setScroll] = React.useState(false);
@@ -16,6 +27,7 @@ export default function Header() {
   });
 
   const { data: session } = useSession();
+  const { toast } = useToast();
 
   return (
     <header
@@ -33,20 +45,58 @@ export default function Header() {
       <div className="flex flex-row gap-2 items-center">
         {session ? (
           <>
-            <Button onClick={() => signOut()} variant={"ghost"}>
-              Sign out
-            </Button>
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
+            <Menubar>
+              <MenubarMenu>
+                <MenubarTrigger>
+                  <Avatar className="cursor-pointer">
+                    <AvatarImage
+                      src={session.user?.image || ""}
+                      alt="@shadcn"
+                    />
+                    <AvatarFallback>
+                      {session.user?.name ? session.user?.name[0] : "t"}
+                    </AvatarFallback>
+                  </Avatar>
+                </MenubarTrigger>
+                <MenubarContent>
+                  <MenubarItem asChild>
+                    <Link
+                      href={"/profile"}
+                      className="flex items-center gap-2 font-semibold"
+                    >
+                      <User className="w-4" />
+                      Profile
+                    </Link>
+                  </MenubarItem>
+                  <MenubarSeparator />
+                  <MenubarItem>
+                    <Button
+                      className="p-0 h-6"
+                      onClick={async () => {
+                        await signOut();
+                        toast({
+                          title: "Sign Out",
+                          description: "User logged Out",
+                        });
+                      }}
+                      variant={"ghost"}
+                    >
+                      <LogOutIcon className="h-4" />
+                      Sign out
+                    </Button>
+                  </MenubarItem>
+                </MenubarContent>
+              </MenubarMenu>
+            </Menubar>
           </>
         ) : (
           <>
-            <Button onClick={() => signIn("github")} variant={"ghost"}>
-              Log in
+            <Button asChild variant={"ghost"}>
+              <Link href={"/login"}>Log in</Link>
             </Button>
-            <Button onClick={() => signIn("github")}>Get Notion free</Button>
+            <Button asChild variant={"default"}>
+              <Link href={"/login"}>Get Notion free</Link>
+            </Button>
           </>
         )}
       </div>

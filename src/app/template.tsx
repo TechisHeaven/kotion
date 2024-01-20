@@ -1,7 +1,8 @@
 import Header from "@/components/MainHeader/Header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { getServerSession } from "next-auth";
-import SessionProvider from "../provider/sessionProvider";
+import SessionProvider from "../provider/SessionProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 export default async function Template({
   children,
@@ -18,7 +19,7 @@ export default async function Template({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
+          <Toaster />
           {children}
         </ThemeProvider>
       </SessionProvider>

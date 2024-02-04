@@ -24,10 +24,12 @@ export default async function Home() {
           </Link>
         ) : (
           <div className="flex gap-2">
-            <Button variant="default" className="font-semibold text-base">
-              Get Kotion free <ArrowRight className="w-5" />
-            </Button>
-            <Link href={"/demo"}>
+            <Link href={"/login"}>
+              <Button variant="default" className="font-semibold text-base">
+                Get Kotion free <ArrowRight className="w-5" />
+              </Button>
+            </Link>
+            <Link href={"/login"}>
               <Button
                 variant="link"
                 className="font-semibold text-blue-500 text-base"

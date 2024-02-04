@@ -1,14 +1,13 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 
-export default function page() {
+export default function Page() {
   const session = useSession();
   const [planning, setPlanning] = React.useState<
     "team" | "personal" | "school" | string
@@ -57,7 +56,7 @@ export default function page() {
           How are you planning to use Kotion?
         </h1>
         <p className="text-gray-500">
-          We'll streamline your setup experience accordingly.
+          We&apos;ll streamline your setup experience accordingly.
         </p>
       </div>
       <div className="flex flex-row gap-4">
@@ -98,7 +97,7 @@ export default function page() {
         className="bg-blue-500 hover:bg-blue-600 active:bg-blue-400 text-white w-[280px]"
         disabled={!planning}
       >
-        <Link href="/randomId" className="w-full">
+        <Link href="/document/randomId" className="w-full">
           Continue
         </Link>
       </Button>

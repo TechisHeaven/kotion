@@ -1,9 +1,5 @@
 import Sidebar from "@/components/Sidebar/Sidebar";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
+
 import "@/components/Sidebar/sidebar.css";
 
 export default async function Template({
@@ -14,7 +10,7 @@ export default async function Template({
   return (
     <div className="flex bg-white relative">
       <Sidebar />
-      <div className="app-frame">{children}</div>
+      <div className="app-frame overflow-y-auto">{children}</div>
     </div>
   );
 }

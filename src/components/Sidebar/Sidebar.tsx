@@ -4,29 +4,23 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import {
-  ArrowDownIcon,
-  ChevronDown,
-  ChevronRight,
-  FileText,
-  LogOutIcon,
-  PlusCircle,
-  Search,
-  Settings,
-  User,
-} from "lucide-react";
+import { LogOutIcon, PlusCircle, Search, Settings, User } from "lucide-react";
 import { useSession } from "next-auth/react";
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import "./sidebar.css";
+import SideBarItems from "./SideBarItems";
 
 export default function Sidebar() {
   //   const session = await getServerSession();
   const { data: session } = useSession();
+  const [expand, setExpand] = React.useState("");
 
   const sidebarRef = React.useRef<HTMLDivElement>(null);
   const [isResizing, setIsResizing] = React.useState(false);
   const [sidebarWidth, setSidebarWidth] = React.useState(268);
+  const [sideBarData, setSideBarData] = React.useState(sideBarItems);
 
   const startResizing = React.useCallback(
     (mouseDownEvent: React.MouseEvent<HTMLElement>) => {
@@ -59,10 +53,22 @@ export default function Sidebar() {
       window.removeEventListener("mouseup", stopResizing);
     };
   }, [resize, stopResizing]);
+
+  function handleContent() {
+    const id = uuidv4();
+    const newElement = {
+      id,
+      title: "untitled new element",
+      icon: "default",
+      childrens: [],
+    };
+    setSideBarData([...sideBarData, newElement]);
+  }
+
   return (
     <div
       ref={sidebarRef}
-      className=" app-sidebar w-[240px] h-screen  border border-r-slate-300 bg-slate-200 flex flex-row"
+      className="sticky top-0 left-0 app-sidebar w-[240px] h-screen  border border-r-slate-300 bg-slate-200 flex flex-row"
       style={{ width: sidebarWidth }}
       onMouseDown={(e) => e.preventDefault()}
     >
@@ -105,20 +111,16 @@ export default function Sidebar() {
             <Settings className="w-4" />
             <p className="text-sm  font-semibold">Settings & members</p>
           </div>
-          <div className="flex items-center gap-2 p-1 cursor-pointer rounded-sm px-4 hover:bg-slate-200 transition-colors">
+          <div
+            onClick={handleContent}
+            className="newPage flex items-center gap-2 p-1 cursor-pointer rounded-sm px-4 hover:bg-slate-200 transition-colors"
+          >
             <PlusCircle className="w-4" />
             <p className="text-sm  font-semibold">New page</p>
           </div>
 
           <div className="content-pages my-4 flex flex-col gap-1">
-            <Link
-              href={"/id"}
-              className="flex items-center gap-2 p-1 cursor-pointer rounded-sm px-4 hover:bg-slate-200 transition-colors"
-            >
-              <ChevronRight className="w-4 hover:bg-slate-300 transition-colors h-4" />
-              <FileText className="w-4 " />
-              <p className="text-sm font-semibold">Untitled</p>
-            </Link>
+            <SideBarItems sideBarData={sideBarData} />
           </div>
         </div>
       </div>
@@ -126,3 +128,44 @@ export default function Sidebar() {
     </div>
   );
 }
+
+const sideBarItems = [
+  {
+    id: "1",
+    title: "Untitled",
+    icon: "default",
+    childrens: [
+      {
+        id: "22",
+        title: "Untitled 22",
+        icon: "default",
+        childrens: [{ id: 2323, title: "Untitled 22", icon: "default" }],
+      },
+    ],
+  },
+  {
+    id: "2",
+    title: "Untitled 2",
+    icon: "default",
+    childrens: [
+      {
+        id: "222",
+        title: "Untitled 2",
+        icon: "default",
+        childrens: [
+          {
+            id: "223",
+            title: "Untitled 223",
+            icon: "default",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "3",
+    title: "Untitled 3",
+    icon: "default",
+    childrens: [],
+  },
+];

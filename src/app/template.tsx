@@ -20,6 +20,7 @@ export default async function Template({
           disableTransitionOnChange
         >
           <Toaster />
+
           {children}
         </ThemeProvider>
       </SessionProvider>

@@ -42,6 +42,7 @@ export default async function Home() {
           className="my-4 mt-8"
           width={600}
           height={400}
+          property="true"
           src={"/hero-image.webp"}
           alt="hero-image"
           loading="eager"

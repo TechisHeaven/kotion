@@ -74,3 +74,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* .bn-block-content[data-content-type="heading"].bn-is-empty
+  .bn-inline-content:before {
+  content: "Your Note Heading" !important;
+} */

@@ -1,6 +1,12 @@
+import EditorHeader from "@/components/EditorHeader/EditorHeader";
 import Sidebar from "@/components/Sidebar/Sidebar";
 
 import "@/components/Sidebar/sidebar.css";
+import { Metadata } from "next";
+
+const metadata: Metadata = {
+  title: "pageTitle",
+};
 
 export default async function Template({
   children,

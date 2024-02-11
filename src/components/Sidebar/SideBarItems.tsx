@@ -2,16 +2,82 @@
 import { ChevronRight, FileText, Minus, Plus } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-export default function SideBarItems({ sideBarData }: any) {
-  const [sidebarData, setSidebarData] = React.useState(sideBarData);
-  const [value, setValue] = React.useState({ id: 1, expanded: true });
+interface SideBarDataType {
+  id: string;
+  title: string;
+  icon: string;
+  childrens: SideBarDataType[];
+}
+
+export default function SideBarItems({
+  sideBarData,
+}: {
+  sideBarData: SideBarDataType;
+}) {
+  const [sidebarData, setSidebarData] =
+    React.useState<SideBarDataType>(sideBarData);
+  const [value, setValue] = React.useState<{ id: string; expanded: boolean }>({
+    id: "1",
+    expanded: true,
+  });
   useEffect(() => {
     setSidebarData(sideBarData);
   }, [sideBarData]);
+
+  function findAndUpdateItem(
+    items: SideBarDataType[],
+    targetId: string,
+    updateFn: (item: SideBarDataType) => void
+  ): SideBarDataType[] {
+    return items.map((item) => {
+      if (item.id === targetId) {
+        updateFn(item);
+      } else if (item.childrens.length < 0) {
+        item.childrens = findAndUpdateItem(item.childrens, targetId, updateFn);
+      }
+      return item;
+    });
+  }
+
+  function handleAddMore(item: SideBarDataType) {
+    const id = uuidv4();
+    const newItem: SideBarDataType = {
+      id: id,
+      title: "Untitled pushed item",
+      icon: "default",
+      childrens: [],
+    };
+    // console.log(item.id, item);
+    // setSidebarData((prevSidebarData) => {
+    //   const updatedData = prevSidebarData.map((data) => {
+    //     console.log(data.id, item.id);
+    //     if (data.id === item.id) {
+    //       return {
+    //         ...data,
+    //         childrens: [...data.childrens, newItem],
+    //       };
+    //     }
+    //     return data;
+    //   });
+
+    //   return updatedData;
+    // });
+    setSidebarData((prevSidebarData) => {
+      const updatedData = findAndUpdateItem(prevSidebarData, item.id, (item) =>
+        item.childrens.push(newItem)
+      );
+
+      return updatedData;
+    });
+
+    //complete todo first
+  }
+
   return (
     <>
-      {sidebarData.map((item: any, index: number) => {
+      {sidebarData.map((item: SideBarDataType, index: number) => {
         return item.childrens.length > 0 ? (
           <div key={item.id}>
             <Link
@@ -30,7 +96,10 @@ export default function SideBarItems({ sideBarData }: any) {
               <p className="text-sm font-semibold">{item.title}</p>
               <div className="transition-opacity items-center gap-1 absolute right-2  group-hover:opacity-100 flex opacity-0">
                 <Minus className="w-5 p-1 hover:bg-slate-300 transition-colors rounded-md" />
-                <Plus className="w-5 p-1 hover:bg-slate-300 transition-colors rounded-md" />
+                <Plus
+                  onClick={() => handleAddMore(item)}
+                  className="w-5 p-1 hover:bg-slate-300 transition-colors rounded-md"
+                />
               </div>
             </Link>
             {value.id == item.id &&
@@ -47,7 +116,10 @@ export default function SideBarItems({ sideBarData }: any) {
                       <p className="text-sm font-semibold">{child.title}</p>
                       <div className="transition-opacity items-center gap-1 absolute right-2  group-hover:opacity-100 flex opacity-0">
                         <Minus className="w-5 p-1 hover:bg-slate-300 transition-colors rounded-md" />
-                        <Plus className="w-5 p-1 hover:bg-slate-300 transition-colors rounded-md" />
+                        <Plus
+                          onClick={() => handleAddMore(child)}
+                          className="w-5 p-1 hover:bg-slate-300 transition-colors rounded-md"
+                        />
                       </div>
                     </Link>
                   </div>
@@ -64,7 +136,10 @@ export default function SideBarItems({ sideBarData }: any) {
               <p className="text-sm font-semibold">{item.title}</p>
               <div className="transition-opacity items-center gap-1 absolute right-2  group-hover:opacity-100 flex opacity-0">
                 <Minus className="w-5 p-1 hover:bg-slate-300 transition-colors rounded-md" />
-                <Plus className="w-5 p-1 hover:bg-slate-300 transition-colors rounded-md" />
+                <Plus
+                  onClick={() => handleAddMore(item)}
+                  className="w-5 p-1 hover:bg-slate-300 transition-colors rounded-md"
+                />
               </div>
             </Link>
           </div>

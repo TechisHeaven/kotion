@@ -1,4 +1,4 @@
-nextjs
+nextjs 
 amazon s3
 nextauth
 supabase
@@ -7,15 +7,15 @@ editorjs
 
 requirements
 
-notion ui 
-auth
+notion ui  ✅
+auth ✅
 archieve functionality 
 trash bin
 search
 settings
 banner
 file update
-editorjs
+editor ✅
 project limit
 publish
 deploy

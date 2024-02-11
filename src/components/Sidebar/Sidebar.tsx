@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import "./sidebar.css";
 import SideBarItems from "./SideBarItems";
+import SearchBox from "./Search/SearchBox";
 
 export default function Sidebar() {
   //   const session = await getServerSession();
@@ -60,7 +61,13 @@ export default function Sidebar() {
       id,
       title: "untitled new element",
       icon: "default",
-      childrens: [],
+      childrens: [
+        {
+          id,
+          title: "untitled element childsssss",
+          icon: "default",
+        },
+      ],
     };
     setSideBarData([...sideBarData, newElement]);
   }
@@ -103,14 +110,15 @@ export default function Sidebar() {
           </PopoverContent>
         </Popover>
         <div className="content">
-          <div className="flex items-center gap-2 p-1 cursor-pointer rounded-sm px-4 hover:bg-slate-200 transition-colors">
-            <Search className="w-4" />
-            <p className="text-sm  font-semibold">Search</p>
-          </div>
-          <div className="flex items-center gap-2 p-1 cursor-pointer rounded-sm px-4 hover:bg-slate-200 transition-colors">
+          <SearchBox />
+
+          <Link
+            href={"/settings"}
+            className="flex items-center gap-2 p-1 cursor-pointer rounded-sm px-4 hover:bg-slate-200 transition-colors"
+          >
             <Settings className="w-4" />
             <p className="text-sm  font-semibold">Settings & members</p>
-          </div>
+          </Link>
           <div
             onClick={handleContent}
             className="newPage flex items-center gap-2 p-1 cursor-pointer rounded-sm px-4 hover:bg-slate-200 transition-colors"
